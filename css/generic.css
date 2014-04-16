@@ -1,0 +1,22 @@
+.navbar {
+    border-radius: 0;
+}
+
+.modal-body {
+    overflow: auto;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.round-corners {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.content {
+    overflow: auto;
+}

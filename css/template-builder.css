@@ -1,0 +1,217 @@
+#template-builder .sidebar-inner {
+    height: 100%;
+    overflow: auto;
+    padding-right: 15px;
+    border-bottom: 66px solid transparent;
+}
+
+#template-builder .sidebar .sidebar-options {
+    height: 100%;
+}
+
+#template-builder .sidebar .actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 10px 10px 15px;
+    background: #333333;
+}
+
+#template-builder .sidebar label,
+#template-builder .sidebar h4 {
+    color: #eeeeee;
+}
+
+#template-builder .sidebar select#type option {
+    text-transform: capitalize;
+}
+
+
+#template-builder .sidebar select#type option:first-child {
+    text-transform: none;
+}
+
+#template-builder .sidebar  .accordion {
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+#template-builder .sidebar .accordion-toggle {
+    display: block;
+    padding: 8px;
+    background: #ffffff;
+}
+
+#template-builder .sidebar .accordion .panel-collapse {
+    padding: 8px;
+}
+
+#template-builder #builder {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 60px 0 0 20%;
+}
+
+#template-builder #main {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+	padding: 15px;
+}
+
+#template-builder #main .content {
+    overflow: auto;
+    min-height: 50px;
+}
+
+#template-builder #main .editable .actions {
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    display: none;
+    z-index: 1001;
+    padding: 0;
+}
+
+#template-builder #main .editable:hover .actions {
+    display: block;
+}
+
+#template-builder #main .editable .actions > * {
+    margin-right: 3px;
+}
+
+#template-builder #main .content.selectable {
+    min-height: 50px;
+    border: 1px dashed #dddddd;
+    cursor: pointer;
+}
+
+#template-builder #main .content.selectable:hover {
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+}
+
+#template-builder #builder #notifications {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+#template-builder #builder #notifications > .alert {
+    width: auto;
+	min-width: 350px;
+}
+
+#template-builder #builder > .alert.clickable {
+    cursor: pointer;
+}
+
+.ui-sortable > .editable,
+.ui-sortable > .container > .editable{
+    position: relative;
+    cursor: move;
+    min-height: 30px;
+    border: 1px dashed #dddddd;
+}
+
+.ui-sortable .editable:hover {
+    background-color: #FCF8E3!important;
+    border: 1px dashed #dddddd!important;
+    cursor: move!important;
+}
+
+.ui-sortable .editable:hover > * {
+    background-color: #FCF8E3!important;
+}
+
+.ui-sortable .drop-target {
+    background: #DFF0D8;
+    border: 1px solid #D6E9C6;
+}
+
+#template-builder #main > .module
+{
+    border: 1px dashed #dddddd;
+    cursor: text;
+}
+
+.modal-body .center .btn {
+    margin-bottom: 5px;
+    width: 32%;
+}
+
+.modal-body .container-layout .btn {
+    background-image: url('../img/icons/container-layout.gif');
+    background-position: center 6px;
+    background-repeat: no-repeat;
+}
+
+.modal-body .center .btn img {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#preview .panel-body > * {
+    width: 100%;
+}
+
+#carouselModal .glyphicon:hover {
+    color: #428BCA;
+    cursor: pointer;
+}
+
+#carouselModal .slide:first-child .glyphicon-minus {
+    display: none;
+}
+
+#navModal #custom-link-form {
+    margin-bottom: 5px;
+}
+
+#navModal #custom-links {
+    display: none;
+}
+
+#navModal #custom-links .btn {
+    margin: 0 35px 5px 0;
+    position: relative;
+}
+#navModal #custom-links .btn span.close {
+    position: absolute;
+    right: -18px;
+}
+
+#navModal .tab-content,
+#navModal .settings {
+    margin: 5px 0;
+}
+
+.modal-body .step {
+    overflow: auto;
+}
+
+#navModal .preview .nav {
+    float: none;
+}
+
+#contentModal textarea {
+	width: 100%;
+	min-height: 230px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    #template-builder #builder {
+        padding-left: 0;
+    }
+}

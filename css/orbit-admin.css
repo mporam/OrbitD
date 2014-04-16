@@ -1,0 +1,200 @@
+html, body {
+    height: 100%;
+	min-width: 320px;
+}
+
+#template-builder {
+    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
+}
+
+#template-builder .topbar {
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+	min-width: 320px;
+    height: 60px;
+    padding: 20px;
+    background: #333333;
+    margin-bottom: 0;
+    z-index: 1001;
+}
+
+#template-builder .expander {
+    display: none;
+    width: 35px;
+    float: left;
+    margin-right: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#template-builder .expander b {
+    display: block;
+    height: 2px;
+    background: #428BCA;
+    margin: 0 auto 2px auto;
+}
+
+#template-builder .expander.active b {
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.75);
+	-moz-box-shadow:    0px 0px 5px 0px rgba(255, 255, 255, 0.75);
+	box-shadow:         0px 0px 5px 0px rgba(255, 255, 255, 0.75);
+}
+
+#template-builder .topbar .navbar-brand {
+    position: absolute;
+	top: 12px;
+	left: 25px;
+	padding: 0;
+}
+
+#template-builder .topbar .pull-right {
+    padding: 0;
+	color: #eeeeee;
+}
+
+#template-builder .topbar .pull-right a {
+	margin: 0 5px;
+}
+
+#template-builder .sidebar {
+    background: #333333;
+    position: fixed;
+    left:0;
+    top: 60px;
+    bottom: 0;
+    width: 20%;
+    border-right: 1px solid #E7E7E7;
+    padding: 0 0 0 15px;
+    z-index: 1000;
+    overflow: hidden;
+    display: block;
+    color: #eeeeee;
+}
+
+#login-form {
+    margin: 10px auto;
+    float: none;
+    max-width: 500px;
+}
+
+.admin-nav {
+    padding: 0;
+    list-style: none;
+}
+
+.admin-nav li {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.admin-nav li.active a {
+    color: #A94442;
+}
+
+.admin-nav li ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.admin-nav li ul li {
+    border: none;
+}
+
+.admin-nav li ul li a,
+.admin-nav li.active ul li a {
+    color: #428BCA;
+}
+
+.item-list ul {
+    background: #dadada;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.item-list li {
+    padding: 10px;
+    list-style: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#navs.item-list li {
+    cursor: pointer;
+}
+
+.item-list li:hover,
+.item-list tr:hover {
+    background: #f2f2f2;
+}
+
+.item-list tr th {
+    background: #ffffff;
+}
+
+.item-list td,
+.item-list th {
+    padding: 10px;
+}
+
+.item-list .homepage {
+    background: #FCF8E3;
+}
+
+.item-list .hover-items a {
+    padding: 0 15px;
+}
+
+.item-list li .delete {
+    color: #A94442;
+}
+
+.item-list li .hover-items {
+    float: right;
+}
+
+.item-list .hover-items {
+    visibility: hidden;
+}
+
+.item-list li:hover .hover-items,
+.item-list tr:hover .hover-items {
+    visibility: visible;
+}
+
+#site-details .keywords .btn {
+	margin: 5px 5px 0 0;
+}
+
+@media only screen and (max-width: 1000px) {
+    #template-builder .sidebar {
+        width: 0;
+        display: none;
+    }
+
+    #template-builder .expander {
+        display: block;
+    }
+	
+	#template-builder .topbar .navbar-brand {
+		left: 75px;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	#template-builder .topbar .pull-right span {
+		display: none;
+	}
+	
+	.admin-nav .layout {
+        display: none;
+	}
+}
