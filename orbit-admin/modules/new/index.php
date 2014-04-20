@@ -60,12 +60,14 @@ $dashboard = 'modules/';
 
                             <div id="background" class="panel-collapse collapse">
                                 <div class="background-container">
-                                    <label for="background">Background:</label>
-                                    <input id="background" type="color" class="form-control" name="background">
-                                    <input type="file" name="background-image">
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="none" name="background">No Background</label>
+                                	<div class="form-group">
+                                        <label for="background">Background color:</label>
+                                        <input id="background" type="color" class="form-control" name="background">
+                                    </div>
+                                    <div class="form-group">
+	                                    <label for="background-image">Background image:</label>
+	                                    <input type="text" class="form-control" name="background-image" placeholder="Background Image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,6 +154,8 @@ $dashboard = 'modules/';
     <div class="modal fade" id="carouselModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
     <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    
+    <div class="modal fade" id="backgroundModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
     <?php require($_SERVER['DOCUMENT_ROOT'] . '/orbit-admin/includes/footerjs.php'); ?>
     <script src="/js/admin/module-builder.js"></script>

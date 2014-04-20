@@ -25,8 +25,6 @@ $(function() {
         request.siteName = $('#site-details #siteName').val();
         request.siteDesc = $('#site-details #siteDesc').val();
         request.domain = $('#site-details #domain').val();
-       
-        console.log(request);
 
             $.ajax({
 			type: "POST",
@@ -43,18 +41,24 @@ $(function() {
 					var successAlert = createAlert({type:'success', title: $result.message});
 					$('#builder').prepend(successAlert);
 					successAlert.delay(3000).fadeOut(1000, function() { $(this).remove(); });
-                                        successAlert.show();
+					successAlert.show();
 				} else {
 					window.location.hash = "/error";
 					var failAlert = createAlert({type:'error', title: $result.message});
 					$('#builder').prepend(failAlert);
 					failAlert.delay(3000).fadeOut(1000, function() { $(this).remove(); });
-                                        failAlert.show();
+					failAlert.show();
 				}
                         },
-			error: function() { console.log('error'); },
+			error: function() {
+				window.location.hash = "/error";
+				var failAlert = createAlert({type:'error', title: 'Save failed. Unknown Error'});
+				$('#builder').prepend(failAlert);
+				failAlert.delay(3000).fadeOut(1000, function() { $(this).remove(); });
+				failAlert.show();	
+			},
   			cache: false
-                    });
+        });
 
     });
 });

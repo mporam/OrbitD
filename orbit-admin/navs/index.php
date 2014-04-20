@@ -15,7 +15,7 @@ $dashboard = '';
 <head>
 	<title>Dashboard | Navigations | OrbitD Admin</title>
 	<?php require($_SERVER['DOCUMENT_ROOT'] . '/orbit-admin/includes/head.php'); ?>
-<script> var navs = <?php echo json_encode($navs); ?>; </script>
+        <script> var navs = <?php echo json_encode($navs); ?>; </script>
     </head>
 <body id="modules">
 <div id="template-builder">

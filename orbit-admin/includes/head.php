@@ -1,4 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico" />
 <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="/css/core.css" rel="stylesheet" media="screen">
 <link href="/css/generic.css" rel="stylesheet" media="screen">
@@ -13,3 +14,4 @@
 <script src="/js/libraries/jquery-1.10.1.min.js"></script>
 <script src="/js/libraries/jquery-ui-1.10.3.min.js"></script>
 <script src="/js/admin/core.js"></script>
+<script src="/js/libraries/bootstrap.min.js"></script>

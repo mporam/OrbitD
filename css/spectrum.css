@@ -247,7 +247,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 /* Input */
 .sp-input-container {
     float:right;
-    width: 100px;
+    width: 151px;
     margin-bottom: 4px;
 }
 .sp-initial-disabled .sp-input-container {
@@ -380,13 +380,13 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 .sp-palette
 {
-    *width: 220px;
-    max-width: 220px;
+    *width: 85px;
+    max-width: 85px;
 }
 .sp-palette .sp-thumb-el
 {
-    width:16px;
-    height: 16px;
+    width: 25px;
+    height: 25px;
     margin:2px 1px;
     border: solid 1px #d0d0d0;
 }

@@ -20,10 +20,11 @@ $(function() {
     });
 
     $('.admin-nav .media').click(function(e) {
+		// fix this stuff!?
         e.preventDefault();
         window.KCFinder = {
         };
-        window.open('/orbit-admin/media/kcfinder/browse.php', 'kcfinder_image', 'status=0, toolbar=0, location=0, menubar=0, directories=0, ' + 'resizable=1, scrollbars=0, width=800, height=600');
+        window.open('/orbit-admin/media/kcfinder/browse.php?type=files', 'kcfinder_single', 'status=0, toolbar=0, location=0, menubar=0, directories=0, ' + 'resizable=1, scrollbars=0, width=800, height=600');
     });
 	
 	$('#modules .item-list .delete').click(function(e) {
@@ -98,4 +99,15 @@ var createAlert = function(options) {
     alert.addClass(alertClass);
 
     return alert;
+};
+
+// get the colour hex or transparent string from spectrum("get") object
+var getColor = function(spobj) {
+	if (typeof spobj == 'undefined' || spobj.length == 0) return "#000000";
+
+	if (spobj.toName() == "transparent") {
+		return spobj.toName();
+	} else {
+		return spobj.toHexString();
+	}
 };

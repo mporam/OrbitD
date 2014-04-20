@@ -2,7 +2,6 @@ var request = {},
 	usedLayouts = [];
 
 window.location.hash = '/';
-
 var navModal = function(step) {
 	
     $('#navModal [data-dismiss="modal"]').click(function() {
@@ -44,6 +43,12 @@ var navModal = function(step) {
             request.name = $('#navModal #step1 #name').val();
             request.elid = $('#navModal #step1 #name').val().replace(/\s/g, "-");
             $('#navModal #step3 .preview nav').attr('id', request.elid);
+            if (typeof request.oldName !== 'undefined') {
+                $('#step3 [name="text-color"]').trigger('change');
+		$('#step3 [name="active-color"]').trigger('change');
+		$('#step3 [name="hover-color"]').trigger('change');
+		$('#step3 [name="bg-color"]').trigger('change');
+            }
             $('#navModal #step1 input[type="checkbox"]').each(function() {
                 var layoutName = $(this).parents('tr').find('td').first().text();
                 var self = $(this);
@@ -121,28 +126,31 @@ var navModal = function(step) {
     });
 
     $('#navModal [name="text-color"]').change(function() {
+        var color = getColor($(this).spectrum("get"));
         $('head style[data-name="text-color"]').remove();
         $('head').append('<style data-name="text-color" data="send"></style>');
         $('style[data-name="text-color"]')
-            .html('#' + request.elid + ' .nav > li > a,  #' + request.elid + ' .nav > li.active > a,  #' + request.elid + ' .nav-pills > li > a,  #' + request.elid + ' .nav-pills > li.active > a,  #' + request.elid + ' .nav-tabs > li > a,  #' + request.elid + ' .nav-tabs > li.active > a { color: ' + $(this).val() + '!important;}');
+            .html('#' + request.elid + ' .nav > li > a,  #' + request.elid + ' .nav > li.active > a,  #' + request.elid + ' .nav-pills > li > a,  #' + request.elid + ' .nav-pills > li.active > a,  #' + request.elid + ' .nav-tabs > li > a,  #' + request.elid + ' .nav-tabs > li.active > a { color: ' + color + '!important;}');
     });
 
     $('#navModal [name="active-color"]').change(function() {
+        var color = getColor($(this).spectrum("get"));
         $('head style[data-name="active-color"]').remove();
         $('head').append('<style data-name="active-color" data="send"></style>'); // yes this is a massive hack, stop complaining!
         $('style[data-name="active-color"]')
-            .html('#' + request.elid + ' .nav > li.active > a,  #' + request.elid + ' .nav-pills > li.active > a,  #' + request.elid + ' .nav-tabs > li.active > a { background-color: ' + $(this).val() + '!important;}  #' + request.elid + ' .nav > li > a:hover,  #' + request.elid + ' .nav-tabs > li > a:hover,  #' + request.elid + ' .nav-pills > li > a:hover,  #' + request.elid + ' .nav-pills > li.active > a:hover,  #' + request.elid + ' .nav-tabs > li.active > a:hover { color: ' + $(this).val() + '!important;}');
+            .html('#' + request.elid + ' .nav > li.active > a,  #' + request.elid + ' .nav-pills > li.active > a,  #' + request.elid + ' .nav-tabs > li.active > a { background-color: ' + color + '!important;}  #' + request.elid + ' .nav > li > a:hover,  #' + request.elid + ' .nav-tabs > li > a:hover,  #' + request.elid + ' .nav-pills > li > a:hover,  #' + request.elid + ' .nav-pills > li.active > a:hover,  #' + request.elid + ' .nav-tabs > li.active > a:hover { color: ' + color + '!important;}');
     });
 
     $('#navModal [name="hover-color"]').change(function() {
+        var color = getColor($(this).spectrum("get"));
         $('head style[data-name="hover-color"]').remove()
         $('head').append('<style data-name="hover-color" data="send"></style>');
         $('style[data-name="hover-color"]')
-            .html('#' + request.elid + ' .nav > li > a:hover, #' + request.elid + ' .nav > li > a.hoverexp, #' + request.elid + ' .nav > li.active > a:hover,  #' + request.elid + ' .nav-pills > li > a:hover,  #' + request.elid + ' .nav-pills > li.active > a:hover,  #' + request.elid + ' .nav-tabs > li > a:hover,  #' + request.elid + ' .nav-tabs > li.active > a:hover { background-color: ' + $(this).val() + '!important;}');
+            .html('#' + request.elid + ' .nav > li > a:hover, #' + request.elid + ' .nav > li > a.hoverexp, #' + request.elid + ' .nav > li.active > a:hover,  #' + request.elid + ' .nav-pills > li > a:hover,  #' + request.elid + ' .nav-pills > li.active > a:hover,  #' + request.elid + ' .nav-tabs > li > a:hover,  #' + request.elid + ' .nav-tabs > li.active > a:hover { background-color: ' + color + '!important;}');
     });
 
     $('#navModal [name="bg-color"]').change(function() {
-        $('#navModal #step3 .active .preview nav').css('background-color', $(this).val());
+        $('#navModal #step3 .active .preview nav').css('background-color', getColor($(this).spectrum("get")));
     });
 	
 	$('#navModal [name="corners"]').change(function() {
@@ -153,7 +161,22 @@ var navModal = function(step) {
 
 
 $(function() {
-	
+
+	$('#overview').on("save-success", function() {
+            $.ajax({
+	        type: "POST",
+                url: "/orbit-admin/data/get_saved_navs.php",
+                data: "",
+                success: function(data, textStatus, jqXHR) {
+                    navs = data;
+                    $('#navs ul').html('');
+                    navs.forEach(function(nav) {
+                        $('#navs ul').append('<li data-id="' + nav.id + '">' + nav.name + '<span class="hover-items"><a href="/orbit-admin/modules/delete/?id=' + nav.id + '&amp;ref=nav" class="delete">Delete</a></span></li>');
+                    });
+                }
+            });
+        });
+
 	$('#navModal').load('/orbit-admin/includes/modals/navModal.php');
 
 	$('#create-nav').click(function(e) {
@@ -162,15 +185,18 @@ $(function() {
 		});
     });
 
-    $('#navs.item-list li').mouseover(function() {
+    $('#navs.item-list').on('mouseover', 'li', function() {
         var thisNav = searchArray($(this).data('id'), 'id', navs);
         $('#quickPreview').html(thisNav.element);
 		$('#quickPreview').append("<style>" + thisNav.headCSS + "</style>");
     });
 
-    $('#navs.item-list li').click(function(e) {
+    $('#navs.item-list').on('click', 'li', function(e) {
         e.stopPropagation();
         var nav = searchArray($(this).data('id'), 'id', navs);
+        request.id = nav.id;
+        request.oldName = nav.name;
+        request.elid = nav.name.replace(/\s/g, "-");
         $('#navModal #step1 #name').val(nav.name);
         $('#navModal #step1 tr input').prop('checked', false);
 
@@ -197,10 +223,10 @@ $(function() {
 
         navModal();
 
-        $('#quickPreview li a').last().addClass('hover');
+        $('#quickPreview li a').last().addClass('hoverexp');
 		$('#step3 [name="text-color"]').spectrum("set", $('#quickPreview li a').first().css('color')).trigger('change');
 		$('#step3 [name="active-color"]').spectrum("set", $('#quickPreview li.active a').first().css('background-color')).trigger('change');
-		$('#step3 [name="hover-color"]').spectrum("set", $('#quickPreview li a.hover').last().css('background-color')).trigger('change');
+		$('#step3 [name="hover-color"]').spectrum("set", $('#quickPreview li a.hoverexp').last().css('background-color')).trigger('change');
 		$('#step3 [name="bg-color"]').spectrum("set", $('#quickPreview nav').css('background-color')).trigger('change');
 
 		if ($('#quickPreview nav').hasClass('round-corners')) {
@@ -242,13 +268,13 @@ $(function() {
 					$result = {code:502, message: 'Save failed. Duplicate navigation name.'};
 				}
 				if ($result.code == 200) {
+                                        $('#overview').trigger("save-success");
 					window.location.hash = "/success";
 					var successAlert = createAlert({type:'success', title: $result.message});
 					$('#notifications').append(successAlert);
 					successAlert.delay(3000).fadeOut(1000, function() { $(this).remove(); });
                                         successAlert.show();
                                         $('#updateModules').load('/orbit-admin/modules/updateModule.php', request);
-                                        //setTimeout(function(){location.reload(); },4000);
 				} else {
 					window.location.hash = "/error";
 					var failAlert = createAlert({type:'error', title: $result.message});

@@ -42,10 +42,14 @@ $dashboard = 'layouts/';
                             <a class="accordion-toggle" data-toggle="collapse" data-parent=".background-accordion" href="#background">Background Settings<span class="caret"></span></a>
 
                             <div id="background" class="panel-collapse collapse">
-                                <label>Body background color:</label>
-                                <input type="color" class="form-control" name="layout-colour">
-                                <label>Body background image:</label>
-                                <input type="text" class="form-control" name="background-image" placeholder="Click here to select a file" />
+                                <div class="form-group">
+                                    <label>Body background color:</label>
+                                    <input type="color" class="form-control" name="layout-colour">
+                                </div>
+                                <div class="form-group">
+                                    <label>Body background image:</label>
+                                    <input type="text" class="form-control" name="background-image" placeholder="Click here to select a file" />
+                                </div>
                             </div>
                         </div>
 
@@ -59,7 +63,6 @@ $dashboard = 'layouts/';
                                             <label>Container background colour:</label>
                                             <input type="color" class="form-control" name="container-colour">
                                      </div>
-
                                      <div class="form-group">
                                          <label>Container background image:</label>
                                          <input type="text" class="form-control" name="container-image" placeholder="Click here to select a file" />
@@ -123,11 +126,15 @@ $dashboard = 'layouts/';
 
 <div class="modal fade" id="backgroundModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
+<div class="modal fade" id="containerModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 <div class="modal fade" id="addModule" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div class="modal fade" id="offsetModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div class="modal fade" id="editContentContainer" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div id="updateNavs"></div>
 
     <?php require($_SERVER['DOCUMENT_ROOT'] . '/orbit-admin/includes/footerjs.php'); ?>
     <script src="/js/admin/layout-builder.js"></script>

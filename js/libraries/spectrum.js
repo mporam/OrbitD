@@ -24,6 +24,7 @@
         showPalette: true,
         showPaletteOnly: false,
         showSelectionPalette: true,
+        showAlpha: false,
         localStorageKey: "spectrum",
         appendTo: "body",
         maxSelectionSize: 7,
@@ -33,9 +34,8 @@
         preferredFormat: "hex",
         containerClassName: "",
         replacerClassName: "",
-        showAlpha: true,
         theme: "sp-light",
-        palette: [["#ffffff", "#000000"]],
+        palette: ["#ffffff", "#000000", "transparent"],
         selectionPalette: [],
         disabled: false
     },

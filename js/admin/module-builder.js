@@ -22,7 +22,7 @@ var buildCarousel = function() {
         $('.carousel-control').attr('href', '#' + carouselID);
     }
     $('#main script').remove(); // remove other options
-    $el.before('<script>$(function() {$(".carousel").carousel(' + JSON.stringify(carouselOptions) + '); });</script>');
+    $el.before('<script>$(function() {$("#' + carouselID + '").carousel(' + JSON.stringify(carouselOptions) + '); });</script>');
 }
 
 var carouselModal = function(step) {
@@ -102,7 +102,7 @@ var carouselModal = function(step) {
                 window.KCFinder = null;
             }
         };
-        window.open('/orbit-admin/media/kcfinder/browse.php?type=images', 'kcfinder_image', 'status=0, toolbar=0, location=0, menubar=0, directories=0, ' + 
+        window.open('/orbit-admin/media/kcfinder/browse.php?type=files', 'kcfinder_single', 'status=0, toolbar=0, location=0, menubar=0, directories=0, ' + 
 'resizable=1, scrollbars=0, width=800, height=600');
     });
 
@@ -160,7 +160,7 @@ $(function() {
                  $('.btn-edit').unbind("click").click(function() { editContent($el)});
                  $el.unbind("click").click(function() { editContent($el)});
 
-		 if (moduleType == 'carousel') {
+		 		if (moduleType == 'carousel') {
                     $('#carouselModal').load('/orbit-admin/includes/modals/carouselModal.php', function() {
                         if ($el.find('.carousel-control').length > 0) {
                             $('#carouselModal #step1 [name="arrows"]').prop('checked', true);
@@ -175,19 +175,20 @@ $(function() {
                         }
 
                         var carouselScript = $el.siblings('script').html();
-                        carouselScript = carouselScript.substring(38);
+						var index = carouselScript.indexOf('.carousel(');
+                        carouselScript = carouselScript.substring(index+10);
                         carouselScript = carouselScript.substring(0, carouselScript.length - 6);
                         carouselScript = $.parseJSON(carouselScript);
 
                         $('#carouselModal #step1 [name="interval"]').val(carouselScript.interval);
 
-                        if (typeof carouselScript.hover != 'undefined' && carouselScript.hover == 'hover') {
+                        if (typeof carouselScript.hover !== 'undefined' && carouselScript.hover == 'hover') {
                             $('#carouselModal #step1 [name="pause"]').prop('checked', true);
                         } else {
                             $('#carouselModal #step1 [name="pause"]').prop('checked', false);
                         }
 
-                        if (typeof carouselScript.wrap!= 'undefined' && carouselScript.wrap) {
+                        if (typeof carouselScript.wrap !== 'undefined' && carouselScript.wrap) {
                             $('#carouselModal #step1 [name="wrap"]').prop('checked', true);
                         } else {
                             $('#carouselModal #step1 [name="wrap"]').prop('checked', false);
@@ -319,60 +320,70 @@ $(function() {
     });
 
     $('#new-module [name="background"]').change(function() {
-        if ($(this).val() !== 'none') {
-            $('[type="checkbox"][name="background"]').prop('checked', false);
-        } else if ($('[type="checkbox"][name="background"]').is(':checked')) {
-            $('#new-module [name="background-image"]').val('');
-            $('#new-module .background-container').slideUp();
-        } else {
-            $('#new-module .background-container').slideDown();
-        }
-        $el.css('background', $(this).val());
+        $el.css('background', getColor($(this).spectrum("get")));
     });
 
-    $('#new-module [name="background-image"]').change(function() {
-        $('#backgroundModal').modal({
-            backdrop: 'static',
-            keyboard: false,
-            show: true
-        });
-
-        $('#backgroundModal [name="position"]').change(function() {
-            $el.css('background-position', $(this).val());
-        });
-
-        $('#backgroundModal [name="repeat-x"]').change(function() {
-            if ($(this).is(':checked') && $('#backgroundModal [name="repeat-y"]').is(':checked')) {
-                $el.css('background-repeat', 'repeat');
-            } else if ($(this).is(':checked')) {
-                $el.css('background-repeat', 'repeat-x');
-            } else if ($('#backgroundModal [name="repeat-y"]').is(':checked')) {
-                $el.css('background-repeat', 'repeat-y');
-            } else {
-                $el.css('background-repeat', 'no-repeat');
+    $('#new-module [name="background-image"]')
+	.click(function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        window.KCFinder = {
+            callBack: function(url) {
+                $this.val(url);
+                window.KCFinder = null;
+				$this.trigger('change');
             }
-        });
-
-        $('#backgroundModal [name="repeat-y"]').change(function() {
-            if ($(this).is(':checked') && $('#backgroundModal [name="repeat-x"]').is(':checked')) {
-                $el.css('background-repeat', 'repeat');
-            } else if ($(this).is(':checked')) {
-                $el.css('background-repeat', 'repeat-y');
-            } else if ($('#backgroundModal [name="repeat-x"]').is(':checked')) {
-                $el.css('background-repeat', 'repeat-x');
-            } else {
-                $el.css('background-repeat', 'no-repeat');
-            }
-        });
-
-        $('#backgroundModal [data-dismiss="modal"]').click(function() {
-            $('#new-module [name="background-image"]').val('');
-        });
-
-        $('#backgroundModal [data-action="save"]').click(function() {
-            // upload image here, somehow.
-            $('#backgroundModal').modal('hide');
-        });
+        };
+        window.open('/orbit-admin/media/kcfinder/browse.php?type=files', 'kcfinder_single', 'status=0, toolbar=0, location=0, menubar=0, directories=0, ' + 'resizable=1, scrollbars=0, width=800, height=600');
+    }).change(function() {
+		$('#background .background-container .bg-settings').remove();
+		if ($(this).val().length > 0) {
+			$el.css('background-image', 'url("' + $(this).val() + '")');
+			$('#backgroundModal').load('/orbit-admin/includes/modals/backgroundModal.php', function() {	
+			
+				var bgsettings = '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#backgroundModal">Edit background settings</button>';
+				$('#background .background-container').append('<div class="form-group bg-settings">' + bgsettings + '</div>');
+			
+				$('#backgroundModal').modal({
+					backdrop: 'static',
+					keyboard: false,
+					show: true
+				});
+		
+				$('#backgroundModal [name="position"]').change(function() {
+					$el.css('background-position', $(this).val());
+				});
+	
+				$('#backgroundModal [name="repeat-x"]').change(function() {
+					if ($(this).is(':checked') && $('#backgroundModal [name="repeat-y"]').is(':checked')) {
+						$el.css('background-repeat', 'repeat');
+					} else if ($(this).is(':checked')) {
+						$el.css('background-repeat', 'repeat-x');
+					} else if ($('#backgroundModal [name="repeat-y"]').is(':checked')) {
+						$el.css('background-repeat', 'repeat-y');
+					} else {
+						$el.css('background-repeat', 'no-repeat');
+					}
+				});
+	
+				$('#backgroundModal [name="repeat-y"]').change(function() {
+					if ($(this).is(':checked') && $('#backgroundModal [name="repeat-x"]').is(':checked')) {
+						$el.css('background-repeat', 'repeat');
+					} else if ($(this).is(':checked')) {
+						$el.css('background-repeat', 'repeat-y');
+					} else if ($('#backgroundModal [name="repeat-x"]').is(':checked')) {
+						$el.css('background-repeat', 'repeat-x');
+					} else {
+						$el.css('background-repeat', 'no-repeat');
+					}
+				});
+	
+				$('#backgroundModal [data-action="save"]').click(function() {
+					$('#backgroundModal').modal('hide');
+					// we dont need to do anything!? leaving this here in case
+				});
+			});
+		}
     });
 
     $('#new-module [name="border-size"]').change(function() {
@@ -384,7 +395,7 @@ $(function() {
     });
 
     $('#new-module [name="border-colour"]').change(function() {
-        $el.css('border-color', $(this).val());
+        $el.css('border-color', getColor($(this).spectrum("get")));
     });
 
     $('#new-module [name="corners"]').change(function() {
@@ -430,7 +441,6 @@ $(function() {
 				try{
 					$result = $.parseJSON(data);
 				} catch(error){
-					console.log(error);
 					$result = {code:502, message: 'Save failed. Duplicate module name.'};
 				}
 				if ($result.code == 200) {
@@ -449,7 +459,14 @@ $(function() {
                     failAlert.show();
 				}
             },
-			error: function() { console.log('error'); },
+			error: function() {
+				window.location.hash = "/error";
+				var failAlert = createAlert({type:'error', title: 'Save failed. Unknown Error.'});
+				$('#builder').trigger('save-fail');
+				$('#notifications').append(failAlert);
+				failAlert.delay(3000).fadeOut(1000, function() { $(this).remove(); });
+				failAlert.show();	
+			},
   			cache: false
 		});
     });

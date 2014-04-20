@@ -76,7 +76,7 @@ var savedLayouts = <?php echo $layouts; ?>;
                     </div>
 
                     <div class="step" id="step3">
-                        <p>Choose the settings for your navigation.</p>
+                        <p>Style your navigation.</p>
 
                         <ul class="nav nav-tabs" id="navType">
                             <li class="active"><a href="#navbar">Horizontal Bar</a></li>
@@ -141,6 +141,12 @@ var savedLayouts = <?php echo $layouts; ?>;
                                     <div class="form-group">
                                         <input type="color" name="bg-color" value="">
                                         <label>Background Colour</label>
+                                    </div>
+                                    <div class="form-group">
+                                    	<label>
+                                        	Round Corners
+                                        	<input type="checkbox" name="corners">
+                                        </label>
                                     </div>
                                 </form>
                                 <h4>Preview</h4>

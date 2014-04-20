@@ -200,8 +200,10 @@
     overflow: auto;
 }
 
-#navModal .preview .nav {
+#navModal .preview .nav,
+#navModal #element .nav {
     float: none;
+	margin: 0;
 }
 
 #contentModal textarea {
